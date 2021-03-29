@@ -25,21 +25,37 @@ pipeline {
       }
     }
 
-
-     stage('Code Analysis') {
-         steps {
-           withSonarQubeEnv('Sonar') {
-             bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
+    stage('Code Analysis') {
+      parallel {
+        stage('Code Analysis') {
+          steps {
+            withSonarQubeEnv('Sonar') {
+              bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
             }
+
+          }
         }
-     }
-     stage('Test Reporting') {
-         steps {
+
+        stage('Test Reporting') {
+          steps {
             cucumber 'reports/example-report.json'
+          }
         }
-     }
 
+      }
+    }
 
+    stage('Deploy') {
+      steps {
+        bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat publish'
+      }
+    }
+
+    stage('Slack notification') {
+      steps {
+        slackSend(baseUrl: 'https://hooks.slack.com/services/', channel: 'tech', message: 'this message was sent from jenkins', token: 'T01N20G4C00/B01SJEEGQRL/lB6Zsyq95Envb6wRI09Ny2vu')
+      }
+    }
 
   }
 }
