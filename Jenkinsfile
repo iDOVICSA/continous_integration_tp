@@ -51,5 +51,11 @@ pipeline {
       }
     }
 
+    stage('Slack notification') {
+      steps {
+        slackSend(baseUrl: 'https://hooks.slack.com/services/', channel: 'tech', message: 'this message was sent from jenkins', token: 'T01N20G4C00/B01SJEEGQRL/lB6Zsyq95Envb6wRI09Ny2vu')
+      }
+    }
+
   }
 }
