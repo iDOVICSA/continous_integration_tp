@@ -16,7 +16,6 @@ pipeline {
         bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat javadoc'
         archiveArtifacts(artifacts: 'build/libs/*.jar', allowEmptyArchive: true)
         archiveArtifacts 'build/reports/tests/test/**/*.*'
-
       }
     }
 
@@ -32,13 +31,7 @@ pipeline {
           bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
         }
 
-        script {
-          def qualitygate = waitForQualityGate()
-          if (qualitygate.status != "OK") {
-            error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-          }
-        }
-
+        waitForQualityGate true
       }
     }
 
