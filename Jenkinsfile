@@ -33,23 +33,32 @@ pipeline {
               bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
             }
 
+            script {
+              timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+              def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+              if (qg.status != 'OK') {
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+            }
           }
+
         }
+      }
 
-        stage('Test Reporting') {
-          steps {
-            cucumber 'reports/example-report.json'
-          }
+      stage('Test Reporting') {
+        steps {
+          cucumber 'reports/example-report.json'
         }
-
       }
-    }
 
-    stage('Deploy') {
-      steps {
-        bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat publish'
-      }
     }
-
   }
+
+  stage('Deploy') {
+    steps {
+      bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat publish'
+    }
+  }
+
+}
 }
