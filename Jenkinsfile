@@ -6,7 +6,6 @@ pipeline {
         echo 'hola'
         echo 'mmmm'
         bat 'gradle build'
-
       }
     }
 
