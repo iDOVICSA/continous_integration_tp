@@ -5,7 +5,7 @@ pipeline {
       steps {
         echo 'hola'
         echo 'mmmm'
-        bat '/gradle.bat build'
+        bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle build'
       }
     }
 
