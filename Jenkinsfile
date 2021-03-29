@@ -13,6 +13,7 @@ pipeline {
       }
       steps {
         bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat build'
+        bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat javadoc'
         archiveArtifacts(artifacts: 'build/libs/*.jar', allowEmptyArchive: true)
       }
     }
