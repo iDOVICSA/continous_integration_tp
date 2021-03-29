@@ -5,7 +5,7 @@ pipeline {
       steps {
         echo 'hola'
         echo 'mmmm'
-        powershell 'gradle build'
+        bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat build'
       }
     }
 
