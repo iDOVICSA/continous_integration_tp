@@ -25,21 +25,25 @@ pipeline {
       }
     }
 
-
-     stage('Code Analysis') {
-         steps {
-           withSonarQubeEnv('Sonar') {
-             bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
+    stage('Code Analysis') {
+      parallel {
+        stage('Code Analysis') {
+          steps {
+            withSonarQubeEnv('Sonar') {
+              bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
             }
+
+          }
         }
-     }
-     stage('Test Reporting') {
-         steps {
+
+        stage('Test Reporting') {
+          steps {
             cucumber 'reports/example-report.json'
+          }
         }
-     }
 
-
+      }
+    }
 
   }
 }
