@@ -5,7 +5,7 @@ pipeline {
       steps {
         echo 'hola'
         echo 'mmmm'
-        bat './gradle.bat build'
+        bat '/gradle.bat build'
       }
     }
 
