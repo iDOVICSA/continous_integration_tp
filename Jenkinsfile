@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'hola'
-        echo 'mmmm'
+        echo '%JAVA_HOME%'
         bat 'D:\\programs\\gradle-5.6-bin\\gradle-5.6\\bin\\gradle.bat build'
       }
     }
