@@ -10,7 +10,7 @@ pipeline {
 
     stage('Mail notification') {
       steps {
-        mail(subject: 'Build Project', body: 'The build was successful', cc: 'hb_chergui@esi.dz;segawel722@bombaya.com')
+        mail(subject: 'Build Project', body: 'The build was successful', cc: 'hb_chergui@esi.dz')
       }
     }
 
