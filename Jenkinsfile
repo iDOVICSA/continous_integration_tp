@@ -24,13 +24,20 @@ pipeline {
     }
 
     stage('Code Analysis') {
-      steps {
-        withSonarQubeEnv('My SonarQube Server') {
-          bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
-        }
+        steps {
+           withSonarQubeEnv('Sonar') {
+              bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
+              }
 
-        waitForQualityGate true
-      }
+           script {
+                def qualitygate = waitForQualityGate()
+                  if (qualitygate.status != "OK") {
+                    error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+                  }
+                }
+
+              }
+
     }
 
   }
