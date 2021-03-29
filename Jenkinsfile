@@ -25,7 +25,9 @@ pipeline {
 
     stage('Code Analysis') {
       steps {
-        bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
+        withSonarQubeEnv('My SonarQube Server') {
+            bat 'D:\\\\programs\\\\gradle-5.6-bin\\\\gradle-5.6\\\\bin\\\\gradle.bat sonarqube'
+        }
         waitForQualityGate true
       }
     }
